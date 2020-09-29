@@ -18,7 +18,6 @@ package io.gatling.core.controller.inject
 
 import java.util.concurrent.atomic.AtomicLong
 
-import scala.collection.breakOut
 import scala.concurrent.duration._
 
 import io.gatling.commons.util.Clock
@@ -61,7 +60,7 @@ private[inject] class Injector(eventLoopGroup: EventLoopGroup, statsEngine: Stat
     val startTime = clock.nowMillis
     scenarios.map { scenario =>
       scenario.name -> scenario.injectionProfile.workload(scenario, userIdGen, startTime, eventLoopGroup, statsEngine, clock)
-    }(breakOut)
+    }.toMap
   }
 
   private def inject(data: StartedData, firstBatch: Boolean): State = {
@@ -79,12 +78,19 @@ private[inject] class Injector(eventLoopGroup: EventLoopGroup, statsEngine: Stat
       logger.info(s"Scenario $scenario has finished injecting")
     }
 
-    if (stillInjectingProgressWorkloads.isEmpty && data.pendingChildrenScenarios.isEmpty) {
-      logger.info(s"StoppedInjecting")
+    val doneInjecting = stillInjectingProgressWorkloads.isEmpty && data.pendingChildrenScenarios.isEmpty
+
+    if (doneInjecting) {
+      logger.info("Injecting is done")
       data.timer.cancel()
     }
 
-    goto(Started) using data.copy(inProgressWorkloads = newInProgressWorkloads, todoScenarios = Nil)
+    if (doneInjecting && allScheduledWorkloads.values.forall(_.isAllUsersStopped)) {
+      logger.info("All workloads are already stopped")
+      stopInjector(data.controller)
+    } else {
+      goto(Started) using data.copy(inProgressWorkloads = newInProgressWorkloads, todoScenarios = Nil)
+    }
   }
 
   when(WaitingToStart) {

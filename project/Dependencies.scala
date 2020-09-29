@@ -19,7 +19,7 @@ object Dependencies {
   private val nettyEpoll                     = netty.organization                     % "netty-transport-native-epoll"    % netty.revision classifier "linux-x86_64"
   private val nettyHttp2                     = netty.organization                     % "netty-codec-http2"               % netty.revision
   private val nettyBoringSsl                 = netty.organization                     % "netty-tcnative-boringssl-static" % "2.0.34.Final"
-  private val akka                           = "com.typesafe.akka"                   %% "akka-actor"                      % "2.6.8"
+  private val akka                           = "com.typesafe.akka"                   %% "akka-actor"                      % "2.6.9"
   private val akkaSlf4j                      = akka.organization                     %% "akka-slf4j"                      % akka.revision
   private val config                         = "com.typesafe"                         % "config"                          % "1.4.0"
   private val saxon                          = ("net.sf.saxon"                        % "Saxon-HE"                        % "10.2")
@@ -33,11 +33,11 @@ object Dependencies {
   private val jackson                        = "com.fasterxml.jackson.core"           % "jackson-databind"                % "2.11.2"
   private val sfm                            = ("org.simpleflatmapper"                % "lightning-csv"                   % "8.2.3")
     .exclude("org.simpleflatmapper", "ow2-asm")
-  private val joddLagarto                    = "org.jodd"                             % "jodd-lagarto"                    % "6.0.0"
+  private val joddLagarto                    = "org.jodd"                             % "jodd-lagarto"                    % "6.0.1"
   private val jmespath                       = "io.burt"                              % "jmespath-jackson"                % "0.5.0"
   private val boopickle                      = "io.suzaku"                           %% "boopickle"                       % "1.3.3"
   private val redisClient                    = "net.debasishg"                       %% "redisclient"                     % "3.30"
-  private val zinc                           = ("org.scala-sbt"                      %% "zinc"                            % "1.4.0-M12")
+  private val zinc                           = ("org.scala-sbt"                      %% "zinc"                            % "1.4.0-M13")
     .exclude("org.scala-lang.modules", "scala-parser-combinators_2.12")
     .exclude("org.scala-lang.modules", "scala-xml_2.12")
     .exclude("org.scala-sbt", "launcher-interface")
@@ -67,7 +67,7 @@ object Dependencies {
   private val scalaTestMockito               = scalaTestScalacheck.organization      %% "mockito-3-4"                     % "3.2.2.0"           % "test"
   private val scalaCheck                     = "org.scalacheck"                      %% "scalacheck"                      % "1.14.3"            % "test"
   private val akkaTestKit                    = akka.organization                     %% "akka-testkit"                    % akka.revision       % "test"
-  private val mockitoCore                    = "org.mockito"                          % "mockito-core"                    % "3.5.11"             % "test"
+  private val mockitoCore                    = "org.mockito"                          % "mockito-core"                    % "3.5.13"             % "test"
   private val activemqBroker                 = ("org.apache.activemq"                 % "activemq-broker"                 % "5.16.0"           % "test")
     .exclude("org.apache.geronimo.specs", "geronimo-jms_1.1_spec")
   private val h2                             = "com.h2database"                       % "h2"                              % "1.4.200"           % "test"

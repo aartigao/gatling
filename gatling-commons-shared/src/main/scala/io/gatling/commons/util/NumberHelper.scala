@@ -49,9 +49,6 @@ object NumberHelper {
       case _ => "th"
     }
 
-    def roundWithScale(scale: Int): Double =
-      BigDecimal(double).setScale(scale, BigDecimal.RoundingMode.HALF_UP).toDouble
-
     def toRank: String =
       if (double == Math.floor(double)) {
         toPrintableString + suffix(double.toInt)
@@ -62,11 +59,13 @@ object NumberHelper {
     def toPrintableString: String = Formatter.format(double)
   }
 
+  @deprecated("Will be removed once FrontLine stop supporting Gatling 3.4", "3.5.0")
   class IntStringOpt(val s: String) extends AnyVal {
     def isEmpty: Boolean = s.exists(char => char < '0' || char > '9')
     def get: Int = s.toInt
   }
 
+  @deprecated("Will be removed once FrontLine stop supporting Gatling 3.4", "3.5.0")
   object IntString {
     def unapply(s: String): IntStringOpt = new IntStringOpt(s)
   }
